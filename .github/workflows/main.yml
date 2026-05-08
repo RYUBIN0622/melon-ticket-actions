@@ -1,20 +1,17 @@
-name: example
-
+name: melon-ticket-check
 on:
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '*/5 * * * *' # 5분마다 실행
+  workflow_dispatch:      # 수동 실행 버튼 활성화
 
 jobs:
-  job:
+  check:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
-
     steps:
       - name: Check Tickets
         uses: mooyoul/melon-ticket-actions@v1.1.0
-
         with:
-          product-id: 204755
-          schedule-id: 100001
-          seat-id: 1_0
-          slack-incoming-webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          product-id: 204755 # 여기에 본인이 예매할 공연 번호 입력
+          schedule-id: 100001 # 여기에 회차 번호 입력
+          seat-id: 1_0        # 여기에 좌석 등급 ID 입력
+          slack-incoming-webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
