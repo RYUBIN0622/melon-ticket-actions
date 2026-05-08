@@ -1,28 +1,18 @@
-name: melon-ticket-check
-
+name: example
 on:
   schedule:
-    - cron: '*/5 * * * *' # 5분마다 자동으로 실행
-  workflow_dispatch:      # 사용자가 원할 때 수동으로 실행하는 버튼 활성화
-
+    - cron: '*/5 * * * *'
+  workflow_dispatch:      # 수동 실행을 위해 추가 가능
 jobs:
-  check-tickets:
+  job:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
-      - name: Check Melon Tickets
+      - name: Check Tickets
         uses: mooyoul/melon-ticket-actions@v1.1.0
         with:
-          # 1. 공연 정보 (이미지 분석 결과)
           product-id: 213100
           schedule-id: 100002
           seat-id: 0
-          
-          # 2. 로그인 정보 (GitHub Secrets에서 불러오기)
-          melon-id: ${{ secrets.MELON_ID }}
-          melon-password: ${{ secrets.MELON_PW }}
-          
-          # 3. 알림 설정 (디스코드 웹훅 주소)
-          slack-incoming-webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
-          
-          # 4. 메시지 설정
-          message: '취소표 떴다! 빨리 들어가!!'
+          slack-incoming-webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
+          message: '티켓사세요 http://ticket.melon.com/performance/index.htm?prodId=213100'
